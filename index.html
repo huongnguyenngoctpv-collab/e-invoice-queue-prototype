@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>E-Invoice Queue</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="topbar-brand">
+          <div class="brand-mark">ONE</div>
+          <div class="brand-text">Account Payable Management</div>
+        </div>
+
+        <nav class="sidebar-nav" aria-label="Main navigation">
+          <button class="nav-item active" aria-label="Dashboard">
+            <span class="nav-icon nav-icon-grid"></span>
+          </button>
+          <button class="nav-item" aria-label="Queue">
+            <span class="nav-icon nav-icon-queue"></span>
+          </button>
+          <button class="nav-item" aria-label="Settings">
+            <span class="nav-icon nav-icon-gear"></span>
+          </button>
+          <button class="nav-item" aria-label="Reports">
+            <span class="nav-icon nav-icon-file"></span>
+          </button>
+          <button class="nav-item" aria-label="User">
+            <span class="nav-icon nav-icon-user"></span>
+          </button>
+        </nav>
+      </aside>
+
+      <main class="main-area">
+        <header class="topbar">
+          <div class="header-title">E-invoice Queue</div>
+          <div class="header-actions">
+            <button class="header-pill">ONE Solutions</button>
+            <button class="header-pill secondary">Support</button>
+            <div class="language-pill">
+              <span class="globe">◌</span>
+              <span>English</span>
+            </div>
+          </div>
+        </header>
+
+        <section class="queue-panel">
+          <div class="tabs" id="statusTabs" aria-label="Invoice statuses">
+            <button class="tab active" data-status="Indexing Failed">
+              <span>Indexing Failed</span>
+              <span class="tab-count">04</span>
+            </button>
+            <button class="tab" data-status="Exceptions">
+              <span>Exceptions</span>
+              <span class="tab-count">01</span>
+            </button>
+            <button class="tab" data-status="Processing">
+              <span>Processing</span>
+              <span class="tab-count">01</span>
+            </button>
+            <button class="tab" data-status="Parking">
+              <span>Parking</span>
+              <span class="tab-count">01</span>
+            </button>
+            <button class="tab" data-status="CSR">
+              <span>CSR</span>
+              <span class="tab-count">01</span>
+            </button>
+            <button class="tab" data-status="BizCommon">
+              <span>BizCommon</span>
+              <span class="tab-count">03</span>
+            </button>
+          </div>
+
+          <div class="filters-panel">
+            <div class="filter-grid">
+              <div class="field-group">
+                <label>Case ID</label>
+                <div class="input-wrap">
+                  <input id="caseIdFilter" type="text" placeholder="Search for case id" />
+                </div>
+              </div>
+
+              <div class="field-group">
+                <label>Received Date</label>
+                <div class="input-wrap date-wrap">
+                  <input type="text" placeholder="YYYY-MM-DD" />
+                  <span class="calendar-icon"></span>
+                </div>
+              </div>
+
+              <div class="field-group">
+                <label>Error Description</label>
+                <div class="input-wrap">
+                  <input id="errorFilter" type="text" placeholder="Search for Error Description" />
+                </div>
+              </div>
+
+              <div class="field-group">
+                <label>Invoice Office</label>
+                <div class="select-wrap">
+                  <select>
+                    <option>All</option>
+                    <option>ARBBB</option>
+                    <option>HKGBB</option>
+                    <option>TYOOB</option>
+                    <option>SHABB</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="field-group">
+                <label>Module</label>
+                <div class="select-wrap">
+                  <select>
+                    <option>All</option>
+                    <option>TRS</option>
+                    <option>MNR</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="field-group">
+                <label>Source</label>
+                <div class="select-wrap">
+                  <select>
+                    <option>All</option>
+                    <option>Email</option>
+                    <option>SFTP</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="field-group">
+                <label>Email To</label>
+                <div class="input-wrap">
+                  <input type="text" placeholder="Search for email from" />
+                </div>
+              </div>
+
+              <div class="field-group">
+                <label>Email From</label>
+                <div class="input-wrap">
+                  <input type="text" placeholder="Search for email from" />
+                </div>
+              </div>
+            </div>
+
+            <div class="filter-footer">
+              <button class="link-text">Exped filters</button>
+              <button class="search-button">
+                <span class="search-icon"></span>
+                Search
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <section class="table-section">
+          <div class="table-tools">
+            <button class="soft-button danger">Delete</button>
+            <button class="soft-button">Create Invoice Manually</button>
+            <button class="soft-button">Generate Reply Email</button>
+          </div>
+
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th class="checkbox-cell"><input type="checkbox" /></th>
+                  <th>Case ID</th>
+                  <th>Received Date</th>
+                  <th>Error Description</th>
+                  <th>Invoice Office</th>
+                  <th>Module</th>
+                  <th>Source</th>
+                  <th>Email Info</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="invoiceTableBody"></tbody>
+            </table>
+          </div>
+
+          <div class="table-footer">
+            <div class="pagination-left">
+              <label class="table-select-wrap">
+                <span>Show 10 items</span>
+                <span class="chevron">▾</span>
+              </label>
+              <span class="table-total">Total 4 results</span>
+            </div>
+            <div class="pagination-right">
+              <button class="pager-link">‹</button>
+              <button class="pager-page active">1</button>
+              <button class="pager-page">2</button>
+              <button class="pager-page">3</button>
+              <button class="pager-page">4</button>
+              <button class="pager-link">›</button>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <aside class="workflow-drawer open" id="workflowDrawer">
+        <div class="drawer-header">
+          <h2>Workflow History</h2>
+          <button class="close-drawer" aria-label="Close workflow history">×</button>
+        </div>
+
+        <div class="drawer-body">
+          <div class="case-header">
+            <div class="case-labels-row">
+              <span class="case-id">Case ID: <strong id="drawerCaseId">104827593</strong></span>
+              <span class="status-badge" id="drawerStatusBadge">INDEXING FAILED</span>
+            </div>
+
+            <div class="attachment-actions">
+              <button class="toggle-attachments">Hide attachments</button>
+            </div>
+          </div>
+
+          <div class="workflow-content">
+            <div class="timeline-wrap">
+              <ul class="timeline" id="workflowTimeline"></ul>
+            </div>
+
+            <div class="detail-panel">
+              <div class="invoice-preview" id="invoicePreview">
+                <div class="invoice-surface">
+                  <div class="invoice-header-row">
+                    <div class="invoice-title">INVOICE</div>
+                    <div class="invoice-meta">No. MCB2302004</div>
+                  </div>
+
+                  <div class="invoice-address-block">
+                    <div class="meta-row"><span>TO:</span> <span>OCEAN NETWORK EXPRESS PTE. LTD.</span></div>
+                    <div class="meta-row"><span></span> <span>7 Straits View #16-01 Marina One East Tower</span></div>
+                    <div class="meta-row"><span></span> <span>Singapore 018936</span></div>
+                  </div>
+
+                  <div class="invoice-table">
+                    <div class="table-head-row">
+                      <span>DESCRIPTION</span>
+                      <span>AMOUNT</span>
+                    </div>
+                    <div class="table-body-row">
+                      <span>MV MEDKON RIE AI1N123</span>
+                      <span>41,765.68 USD</span>
+                    </div>
+                  </div>
+
+                  <div class="invoice-footer">
+                    <div class="total-label">TOTAL AMOUNT DUE</div>
+                    <div class="total-value">41,765.68 USD</div>
+                  </div>
+                </div>
+
+                <div class="callout-note">A new file will replace the current invoice and the extracted data.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
